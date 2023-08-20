@@ -1,7 +1,8 @@
 <?php
-$pageHeader = 'Welcome';
 
+$pageHeader = 'Welcome';
 $isUserAuth = false;
+
 if (isset($_SESSION['user'])) {
     $isUserAuth = true;
 }
