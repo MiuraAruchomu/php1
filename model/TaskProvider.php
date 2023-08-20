@@ -3,21 +3,51 @@ require_once 'model/Task.php';
 
 class TaskProvider
 {
-    public static function addTask(Task $task): void
+    private PDO $pdo;
+
+    public function __construct(PDO $pdo)
     {
-        $_SESSION['tasks'][] = $task;
+        $this->pdo = $pdo;
     }
 
-    public static function getUndoneList(): array
+    public function addTask(Task $task): bool
     {
-        $tasks = [];
-        if (isset($_SESSION['tasks'])) {
-            foreach ($_SESSION['tasks'] as $key => $task) {
-                if (!$task->isDone) {
-                    $tasks[$key] = $task;
-                }
-            }
-        }
-        return $tasks;
+        $statement = $this->pdo->prepare(
+            'INSERT INTO tasks (description) VALUES (:description)'
+        );
+
+        return $statement->execute([
+            'description' => $task->getDescription()
+        ]);
+    }
+
+    public function deleteTask(int $id): bool
+    {
+        $statement = $this->pdo->prepare(
+            'DELETE FROM tasks WHERE id = ?'
+        );
+        return $statement->execute([$id]);
+
+    }
+
+    public function getUndoneList(): ?array
+    {
+        $undoneList = [];
+        $statement = $this->pdo->prepare(
+            'SELECT * FROM tasks'
+        );
+        $statement->execute();
+
+        // НЕ РАБОТАЕТ
+        // while ($statement && $task = $statement->fetchObject(Task::class)){
+        //     $undoneList[] = $task;
+        // };
+        
+        while ($statement && $data = $statement->fetch()){
+            $task = new Task($data['description']);
+            $task->id = $data['id'];
+            $undoneList[] = $task;
+        };
+        return $undoneList;
     }
 }

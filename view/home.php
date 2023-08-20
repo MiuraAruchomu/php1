@@ -8,6 +8,7 @@
 
     <?php if ($isUserAuth === false) : ?>
         <a href="/?controller=security">Sign in</a>
+        <a href="/?controller=signup">Sign up</a>
     <?php endif ?>
 
     <?php if (isset($_SESSION['user'])) : ?>

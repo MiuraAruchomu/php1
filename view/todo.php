@@ -1,4 +1,6 @@
-<?php require_once 'controller/TaskController.php'; ?>
+<?php
+require_once 'controller/TaskController.php'; ?>
+
 <a href="/">Back</a>
 
 <form method="post" action="/?controller=todo&action=add">
@@ -12,7 +14,7 @@
         foreach ($tasks as $key => $task) {
     ?>
             <li>
-                <h4><?= $task->getDescription()?> <a href="/?controller=todo&action=done&id=<?= $key ?>">Done</a></h4>
+                <h4><?= $task->getDescription()?> <a href="/?controller=todo&action=done&id=<?= $task->id ?>">Done</a></h4>
             </li>
     <?php
         }

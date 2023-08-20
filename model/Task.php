@@ -3,7 +3,7 @@
 class Task
 {
     public string $description = "";
-    public bool $isDone = false;
+    public int $id;
 
     function __construct(string $description)
     {
@@ -13,15 +13,5 @@ class Task
     public function getDescription(): string
     {
         return $this->description;
-    }
-
-    public function isDone(): void
-    {
-        $this->isDone = true;
-    }
-
-    public function setIsDone(bool $isDone): void
-    {
-        $this->isDone = $isDone;
     } 
 }
