@@ -1,4 +1,6 @@
 <?php
+require_once 'errorHandler.php';
+require_once 'model/Logger.php';
 require_once 'model/User.php';
 require_once 'model/UserProvider.php';
 require_once 'model/Task.php';
