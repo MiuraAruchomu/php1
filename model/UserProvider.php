@@ -12,6 +12,10 @@ class UserProvider
 
     public function registerUser(string $name, string $username, string $password): ?bool
     {
+        if ((strlen($password) > 30)) {
+            throw new Exception('Password length cannot be more than 30 characters');
+        }
+
         $user = new User($username);
         $user->setName($name);
         $statement = $this->pdo->prepare(
